@@ -3,6 +3,8 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
+
+
 const ResultView = () => {
     const [regNo, setRegNo] = useState("");
     const [semester, setSemester] = useState("First");
@@ -28,86 +30,15 @@ const ResultView = () => {
         }
     };
 
-    const downloadPDF = () => {
-        const doc = new jsPDF();
-        doc.text("Student Result", 14, 15);
-        doc.text(`Name: ${resultData.studentName}`, 14, 25);
-        doc.text(`Reg No: ${resultData.regNo}`, 14, 32);
-        doc.text(`Department: ${resultData.dept}`, 14, 39);
-        doc.text(`Semester: ${resultData.semester}`, 14, 46);
-
-        const tableData = resultData.result.map((sub) => [
-            sub.code,
-            sub.title,
-            sub.credit,
-            sub.assignment,
-            sub.classtest,
-            sub.midterm,
-            sub.final,
-            sub.total,
-            sub.letterGrade,
-            sub.gradePoint,
-        ]);
-
-        doc.autoTable({
-            startY: 55,
-            head: [
-                [
-                    "Code",
-                    "Title",
-                    "Credit",
-                    "Assignment",
-                    "Class Test",
-                    "Midterm",
-                    "Final",
-                    "Total",
-                    "Letter Grade",
-                    "GP",
-                ],
-            ],
-            body: tableData,
-        });
-
-        doc.text(
-            `GPA: ${resultData.GradePointAverage} (${resultData.letterGradeAverage})`,
-            14,
-            doc.lastAutoTable.finalY + 10
-        );
-        doc.save(`${resultData.regNo}_${resultData.semester}_Result.pdf`);
-    };
-
     // const downloadPDF = () => {
     //     const doc = new jsPDF();
-    //     const pageWidth = doc.internal.pageSize.getWidth();
+    //     doc.text("Student Result", 14, 15);
+    //     doc.text(`Name: ${resultData.studentName}`, 14, 25);
+    //     doc.text(`Reg No: ${resultData.regNo}`, 14, 32);
+    //     doc.text(`Department: ${resultData.dept}`, 14, 39);
+    //     doc.text(`Semester: ${resultData.semester}`, 14, 46);
 
-    //     // Header
-    //     doc.setFontSize(18);
-    //     doc.text("Student Result", pageWidth / 2, 15, { align: "center" });
-
-    //     // Student Info
-    //     doc.setFontSize(12);
-    //     doc.text(`Name: ${resultData.studentName}`, 14, 30);
-    //     doc.text(`Reg No: ${resultData.regNo}`, 14, 37);
-    //     doc.text(`Father: ${resultData.fatherName}`, 14, 44);
-    //     doc.text(`Mother: ${resultData.motherName}`, 14, 51);
-    //     doc.text(`Department: ${resultData.dept}`, 14, 58);
-    //     doc.text(`Semester: ${resultData.semester}`, 14, 65);
-
-    //     // Table
-    //     const tableColumn = [
-    //         "Code",
-    //         "Title",
-    //         "Credit",
-    //         "Assignment",
-    //         "Class Test",
-    //         "Midterm",
-    //         "Final",
-    //         "Total",
-    //         "Letter Grade",
-    //         "GP",
-    //     ];
-
-    //     const tableRows = resultData.result.map((sub) => [
+    //     const tableData = resultData.result.map((sub) => [
     //         sub.code,
     //         sub.title,
     //         sub.credit,
@@ -120,28 +51,99 @@ const ResultView = () => {
     //         sub.gradePoint,
     //     ]);
 
-    //     // ✅ Correct jsPDF-autotable syntax
     //     doc.autoTable({
-    //         startY: 75,
-    //         head: [tableColumn],
-    //         body: tableRows,
-    //         theme: "grid",
-    //         styles: { fontSize: 10 },
-    //         headStyles: { fillColor: [22, 160, 133] },
+    //         startY: 55,
+    //         head: [
+    //             [
+    //                 "Code",
+    //                 "Title",
+    //                 "Credit",
+    //                 "Assignment",
+    //                 "Class Test",
+    //                 "Midterm",
+    //                 "Final",
+    //                 "Total",
+    //                 "Letter Grade",
+    //                 "GP",
+    //             ],
+    //         ],
+    //         body: tableData,
     //     });
 
-    //     // Footer (GPA Summary)
-    //     const finalY = doc.lastAutoTable?.finalY || 80;
-    //     doc.setFontSize(13);
     //     doc.text(
     //         `GPA: ${resultData.GradePointAverage} (${resultData.letterGradeAverage})`,
     //         14,
-    //         finalY + 10
+    //         doc.lastAutoTable.finalY + 10
     //     );
-
-    //     // Save PDF
     //     doc.save(`${resultData.regNo}_${resultData.semester}_Result.pdf`);
     // };
+
+    const downloadPDF = () => {
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+
+        // Header
+        doc.setFontSize(18);
+        doc.text("Student Result", pageWidth / 2, 15, { align: "center" });
+
+        // Student Info
+        doc.setFontSize(12);
+        doc.text(`Name: ${resultData.studentName}`, 14, 30);
+        doc.text(`Reg No: ${resultData.regNo}`, 14, 37);
+        doc.text(`Father: ${resultData.fatherName}`, 14, 44);
+        doc.text(`Mother: ${resultData.motherName}`, 14, 51);
+        doc.text(`Department: ${resultData.dept}`, 14, 58);
+        doc.text(`Semester: ${resultData.semester}`, 14, 65);
+
+        // Table
+        const tableColumn = [
+            "Code",
+            "Title",
+            "Credit",
+            "Assignment",
+            "Class Test",
+            "Midterm",
+            "Final",
+            "Total",
+            "Letter Grade",
+            "GP",
+        ];
+
+        const tableRows = resultData.result.map((sub) => [
+            sub.code,
+            sub.title,
+            sub.credit,
+            sub.assignment,
+            sub.classtest,
+            sub.midterm,
+            sub.final,
+            sub.total,
+            sub.letterGrade,
+            sub.gradePoint,
+        ]);
+
+        // ✅ Correct jsPDF-autotable syntax
+        doc.autoTable({
+            startY: 75,
+            head: [tableColumn],
+            body: tableRows,
+            theme: "grid",
+            styles: { fontSize: 10 },
+            headStyles: { fillColor: [22, 160, 133] },
+        });
+
+        // Footer (GPA Summary)
+        const finalY = doc.lastAutoTable?.finalY || 80;
+        doc.setFontSize(13);
+        doc.text(
+            `GPA: ${resultData.GradePointAverage} (${resultData.letterGradeAverage})`,
+            14,
+            finalY + 10
+        );
+
+        // Save PDF
+        doc.save(`${resultData.regNo}_${resultData.semester}_Result.pdf`);
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-base-200 p-4">
