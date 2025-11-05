@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import ResultView from "../pages/ResultView";
 import AddResult from "../pages/AddResult";
 import AddStudent from "../pages/AddStudent";
+import AddCourse from "../pages/AddCourse";
 
 const Router = () => {
     return (
@@ -13,6 +14,7 @@ const Router = () => {
                 <Route path="/result" element={<ResultView/>} />
                 <Route path="/add-result" element={<AddResult/>} />
                 <Route path="/add-student" element={<AddStudent/>} />
+                <Route path="/add-course" element={<AddCourse/>} />
             </Route>
         </Routes>
     );
