@@ -3,6 +3,7 @@ import App from "../App";
 import Home from "../pages/Home";
 import ResultView from "../pages/ResultView";
 import AddResult from "../pages/AddResult";
+import AddStudent from "../pages/AddStudent";
 
 const Router = () => {
     return (
@@ -11,6 +12,7 @@ const Router = () => {
                 <Route path="/" element={<Home/>} />
                 <Route path="/result" element={<ResultView/>} />
                 <Route path="/add-result" element={<AddResult/>} />
+                <Route path="/add-student" element={<AddStudent/>} />
             </Route>
         </Routes>
     );
