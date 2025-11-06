@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router";
 
-const TeacherLogin = () => {
+const TeacherRegister = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -16,30 +17,27 @@ const TeacherLogin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setSuccess("");
         setLoading(true);
+
         try {
             const res = await axios.post(
-                "http://localhost:5000/api/teacher/login",
+                "http://localhost:5000/api/teacher/register",
                 formData
             );
 
-            if (res.data && res.data.teacher) {
-                // ✅ Save teacher data in localStorage
-                localStorage.setItem(
-                    "teacher",
-                    JSON.stringify(res.data.teacher)
-                );
-                console.log(res.data.teacher);
-                // ✅ Navigate to Home Page
-                navigate("/");
+            if (res.data?.message) {
+                setSuccess(res.data.message);
+                // ✅ Redirect to login page after short delay
+                setTimeout(() => navigate("/teacher-login"), 1500);
             } else {
-                setError("Invalid response from server");
+                setError("Unexpected server response.");
             }
         } catch (err) {
-            if (err.response && err.response.data?.message) {
+            if (err.response?.data?.message) {
                 setError(err.response.data.message);
             } else {
-                setError("Login failed. Please try again.");
+                setError("Registration failed. Please try again.");
             }
         } finally {
             setLoading(false);
@@ -50,7 +48,7 @@ const TeacherLogin = () => {
         <div className="min-h-screen flex justify-center items-center bg-base-200 p-4">
             <div className="w-full max-w-md bg-base-100 shadow-xl p-6 rounded-xl">
                 <h2 className="text-2xl font-bold text-center mb-4">
-                    👨‍🏫 Teacher Login
+                    🧑‍🏫 Teacher Registration
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -87,24 +85,29 @@ const TeacherLogin = () => {
                             ⚠️ {error}
                         </p>
                     )}
+                    {success && (
+                        <p className="text-success text-center font-medium">
+                            ✅ {success}
+                        </p>
+                    )}
 
                     <button
                         type="submit"
                         className="btn btn-primary w-full"
                         disabled={loading}
                     >
-                        {loading ? "Logging in..." : "Login"}
+                        {loading ? "Registering..." : "Register"}
                     </button>
                 </form>
 
                 <div className="text-center mt-4">
                     <p>
-                        Don't have an account?{" "}
+                        Already have an account?{" "}
                         <Link
-                            to="/teacher-register"
+                            to="/teacher-login"
                             className="text-blue-600 font-semibold"
                         >
-                            Register Here
+                            Login Here
                         </Link>
                     </p>
                 </div>
@@ -113,4 +116,4 @@ const TeacherLogin = () => {
     );
 };
 
-export default TeacherLogin;
+export default TeacherRegister;

@@ -7,6 +7,7 @@ import AddStudent from "../pages/AddStudent";
 import AddCourse from "../pages/AddCourse";
 import AddTeacher from "../pages/AddTeacher";
 import TeacherLogin from "../pages/TeacherLogin";
+import TeacherRegister from "../pages/TeacherRegister";
 
 const Router = () => {
     return (
@@ -19,6 +20,7 @@ const Router = () => {
                 <Route path="/add-course" element={<AddCourse/>} />
                 <Route path="/add-teacher" element={<AddTeacher/>} />
                 <Route path="/teacher-login" element={<TeacherLogin/>} />
+                <Route path="/teacher-register" element={<TeacherRegister/>} />
             </Route>
         </Routes>
     );
