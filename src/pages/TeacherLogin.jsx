@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router";
+import { useTeacher } from "../Auth/TeacherContext";
 
 const TeacherLogin = () => {
+    const { loginTeacher } = useTeacher();
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -25,11 +27,12 @@ const TeacherLogin = () => {
 
             if (res.data && res.data.teacher) {
                 // ✅ Save teacher data in localStorage
-                localStorage.setItem(
-                    "teacher",
-                    JSON.stringify(res.data.teacher)
-                );
-                console.log(res.data.teacher);
+                // localStorage.setItem(
+                //     "teacher",
+                //     JSON.stringify(res.data.teacher)
+                // );
+                loginTeacher(res.data.teacher);
+                // console.log(res.data.teacher);
                 // ✅ Navigate to Home Page
                 navigate("/");
             } else {

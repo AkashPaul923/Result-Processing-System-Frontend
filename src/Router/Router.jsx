@@ -8,19 +8,48 @@ import AddCourse from "../pages/AddCourse";
 import AddTeacher from "../pages/AddTeacher";
 import TeacherLogin from "../pages/TeacherLogin";
 import TeacherRegister from "../pages/TeacherRegister";
+import PrivateRoute from "../Auth/PrivateRoute";
 
 const Router = () => {
     return (
         <Routes>
-            <Route path="/" element={<App/>}>
-                <Route path="/" element={<Home/>} />
-                <Route path="/result" element={<ResultView/>} />
-                <Route path="/add-result" element={<AddResult/>} />
-                <Route path="/add-student" element={<AddStudent/>} />
-                <Route path="/add-course" element={<AddCourse/>} />
-                <Route path="/add-teacher" element={<AddTeacher/>} />
-                <Route path="/teacher-login" element={<TeacherLogin/>} />
-                <Route path="/teacher-register" element={<TeacherRegister/>} />
+            <Route path="/" element={<App />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/result" element={<ResultView />} />
+                <Route path="/teacher-login" element={<TeacherLogin />} />
+                <Route path="/teacher-register" element={<TeacherRegister />} />
+                <Route
+                    path="/add-result"
+                    element={
+                        <PrivateRoute>
+                            <AddResult />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/add-student"
+                    element={
+                        <PrivateRoute>
+                            <AddStudent />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/add-course"
+                    element={
+                        <PrivateRoute>
+                            <AddCourse />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/add-teacher"
+                    element={
+                        <PrivateRoute>
+                            <AddTeacher />
+                        </PrivateRoute>
+                    }
+                />
             </Route>
         </Routes>
     );
