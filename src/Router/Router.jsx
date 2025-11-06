@@ -5,6 +5,8 @@ import ResultView from "../pages/ResultView";
 import AddResult from "../pages/AddResult";
 import AddStudent from "../pages/AddStudent";
 import AddCourse from "../pages/AddCourse";
+import AddTeacher from "../pages/AddTeacher";
+import TeacherLogin from "../pages/TeacherLogin";
 
 const Router = () => {
     return (
@@ -15,6 +17,8 @@ const Router = () => {
                 <Route path="/add-result" element={<AddResult/>} />
                 <Route path="/add-student" element={<AddStudent/>} />
                 <Route path="/add-course" element={<AddCourse/>} />
+                <Route path="/add-teacher" element={<AddTeacher/>} />
+                <Route path="/teacher-login" element={<TeacherLogin/>} />
             </Route>
         </Routes>
     );
